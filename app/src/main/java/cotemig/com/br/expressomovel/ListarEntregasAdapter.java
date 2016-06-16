@@ -1,6 +1,7 @@
 package cotemig.com.br.expressomovel;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +18,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cotemig.com.br.expressomovel.Entidades.Item;
+import cotemig.com.br.expressomovel.dao.ItemDAO;
 
 public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAdapter.ViewHolder> {
     private static ArrayList<Item> listaItens;
+    public static Context aContext;
+    public static Long idUsuario;
 
-    public ListarEntregasAdapter(ArrayList<Item> i) {
+    public ListarEntregasAdapter(Context context, ArrayList<Item> i, long id) {
+        aContext = context;
         listaItens = i;
+        idUsuario = id;
     }
 
     @Override
@@ -63,6 +69,7 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView Id;
+        public TextView Descricao;
         public TextView DtEntrega;
         public TextView LocalRetirada;
         public TextView DtRetirada;
@@ -73,6 +80,7 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
             super(rowView);
 
             Id = (TextView) rowView.findViewById(R.id.entrega_Id);
+            Descricao = (TextView) rowView.findViewById(R.id.entrega_Descricao);
             DtEntrega = (TextView) rowView.findViewById(R.id.entrega_DtEntrega);
             LocalRetirada = (TextView) rowView.findViewById(R.id.entrega_LocalRetirada);
             DtRetirada = (TextView) rowView.findViewById(R.id.entrega_DtRetirada);
@@ -86,9 +94,9 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
                     Bundle b = new Bundle();
                     b.putString("Origem", LocalRetirada.getText().toString());
                     b.putString("Destino", LocalEntrega.getText().toString());
-                    Intent i = new Intent(v.getContext(), MapaActivity.class);
+                    Intent i = new Intent(aContext, MapaActivity.class);
                     i.putExtras(b);
-                    v.getContext().startActivity(i);
+                    aContext.startActivity(i);
                 }
             });
 
@@ -97,8 +105,6 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
                 @Override
                 public boolean onLongClick(View v) {
                     showPopup(v, getAdapterPosition());
-//                    Toast.makeText(v.getContext(), "OnLongClick Version :" + versionName,
-//                            Toast.LENGTH_SHORT).show();
                     return true;
 
                 }
@@ -109,23 +115,20 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
         private void showPopup(final View v, final int position) {
             PopupMenu popup = new PopupMenu(v.getContext(), v);
             MenuInflater inflate = popup.getMenuInflater();
-            inflate.inflate(R.menu.menu_listar_itens, popup.getMenu());
+            inflate.inflate(R.menu.menu_listar_entregas, popup.getMenu());
 
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
-                        case R.id.editar:
-                            Intent vaiProFormulario = new Intent(v.getContext(), CadastrarItemActivity.class);
+                        case R.id.entrega_Aceitar:
+                            listaItens.get(position).setIdEntregador(idUsuario);
+                            ItemDAO itemDAO = new ItemDAO(aContext);
+                            itemDAO.aceitarEntrega(listaItens.get(position));
 
-                            vaiProFormulario.putExtra("item", listaItens.get(position));
-
-                            v.getContext().startActivity(vaiProFormulario);
-
-                            Toast.makeText(v.getContext(), "Editar " + listaItens.get(position).getDescricao(), Toast.LENGTH_SHORT).show();
                             break;
-                        case R.id.deletar:
+                        case R.id.entrega_Cancelar:
                             // do what you need .
                             break;
                         default:

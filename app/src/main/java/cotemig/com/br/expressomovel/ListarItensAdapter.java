@@ -52,10 +52,12 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
         // - replace the contents of the view with that itemsData
 
         viewHolder.Id.setText(String.valueOf(listaItens.get(position).getIdItem()));
+        viewHolder.Descricao.setText(listaItens.get(position).getDescricao());
         viewHolder.DtEntrega.setText(listaItens.get(position).getDataEntrega());
         viewHolder.DtRetirada.setText(listaItens.get(position).getDataRetirada());
         viewHolder.LocalEntrega.setText(listaItens.get(position).getLocalEntrega());
         viewHolder.LocalRetirada.setText(listaItens.get(position).getLocalRetirada());
+        viewHolder.LocalRetirada.setText(String.valueOf(listaItens.get(position).getIdEntregador()));
 
     }
 
@@ -69,19 +71,23 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView Id;
+        public TextView Descricao;
         public TextView DtEntrega;
         public TextView LocalRetirada;
         public TextView DtRetirada;
         public TextView LocalEntrega;
+        public TextView Entregador;
 
         public ViewHolder(View rowView) {
             super(rowView);
 
             Id = (TextView) rowView.findViewById(R.id.pedido_Id);
-            DtEntrega = (TextView) rowView.findViewById(R.id.DtEntrega);
-            LocalRetirada = (TextView) rowView.findViewById(R.id.LocalRetirada);
-            DtRetirada = (TextView) rowView.findViewById(R.id.DtRetirada);
-            LocalEntrega = (TextView) rowView.findViewById(R.id.LocalEntrega);
+            Descricao = (TextView) rowView.findViewById(R.id.pedido_Descricao);
+            DtEntrega = (TextView) rowView.findViewById(R.id.pedido_DtEntrega);
+            LocalRetirada = (TextView) rowView.findViewById(R.id.pedido_LocalRetirada);
+            DtRetirada = (TextView) rowView.findViewById(R.id.pedido_DtRetirada);
+            LocalEntrega = (TextView) rowView.findViewById(R.id.pedido_LocalEntrega);
+            Entregador = (TextView) rowView.findViewById(R.id.pedido_Entregador);
 
             rowView.setOnLongClickListener(new View.OnLongClickListener() {
 
@@ -107,15 +113,13 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
                     switch (item.getItemId()) {
                         case R.id.editar:
                             Intent vaiProFormulario = new Intent(aContext, CadastrarItemActivity.class);
-
                             vaiProFormulario.putExtra("item", listaItens.get(position));
-
                             aContext.startActivity(vaiProFormulario);
-
                             Toast.makeText(aContext, "Editar " + itemDescricao, Toast.LENGTH_SHORT).show();
                             break;
+
                         case R.id.deletar:
-                            ItemDAO itemDAO = new ItemDAO(v.getContext());
+                            ItemDAO itemDAO = new ItemDAO(aContext);
                             itemDAO.deletar(listaItens.get(position));
                             removeAt(getAdapterPosition());
                             Toast.makeText(aContext, "Deletar " + itemDescricao, Toast.LENGTH_SHORT).show();

@@ -44,8 +44,12 @@ public class ListarEntregasActivity extends AppCompatActivity {
 
     private String getPerfil() {
         UsuarioDAO dao = new UsuarioDAO(this);
-        String perfil = dao.getPerfil();
-        return perfil;
+        return dao.getPerfil();
+    }
+
+    private long getIdUsuario() {
+        UsuarioDAO dao = new UsuarioDAO(this);
+        return dao.getId();
 
     }
 
@@ -95,7 +99,7 @@ public class ListarEntregasActivity extends AppCompatActivity {
         this.itens.clear();
         this.itens = dao.getTodositens();
 
-        itemAdapter = new ListarEntregasAdapter(itens);
+        itemAdapter = new ListarEntregasAdapter(ListarEntregasActivity.this, itens, getIdUsuario());
 
         listaEntregas.setAdapter(itemAdapter);
     }

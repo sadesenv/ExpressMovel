@@ -18,6 +18,11 @@
             android:gravity="start" />
 
         <TextView
+            android:id="@+id/entrega_Descricao"
+            style="@style/titulo"
+            android:layout_toRightOf="@id/entrega_Id" />
+
+        <TextView
             android:id="@+id/entrega_LabelRetirada"
             style="@style/AppTheme.texto.card"
             android:layout_below="@id/entrega_Id"
