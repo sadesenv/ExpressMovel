@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/fab_margin">
+
+        <TextView
+            android:id="@+id/pedido_Id"
+            style="@style/titulo"
+            android:gravity="start" />
+
+        <TextView
+            android:id="@+id/LabelRetirada"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/pedido_Id"
+            android:text="@string/data_retirada" />
+
+        <TextView
+            android:id="@+id/DtRetirada"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/pedido_Id"
+            android:layout_toRightOf="@id/LabelRetirada" />
+
+        <TextView
+            android:id="@+id/tvLabelEntrega"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/LabelRetirada"
+            android:text="@string/data_entrega" />
+
+        <TextView
+            android:id="@+id/DtEntrega"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/DtRetirada"
+            android:layout_toRightOf="@id/tvLabelEntrega" />
+
+        <TextView
+            android:id="@+id/LabelLocalRetirada"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/DtEntrega"
+            android:text="@string/local_retirada" />
+
+        <TextView
+            android:id="@+id/LocalRetirada"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/DtEntrega"
+            android:layout_toRightOf="@id/LabelLocalRetirada" />
+
+        <TextView
+            android:id="@+id/LabelLocalEntrega"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/LabelLocalRetirada"
+            android:text="@string/local_entrega" />
+
+        <TextView
+            android:id="@+id/LocalEntrega"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/LabelLocalRetirada"
+            android:layout_toRightOf="@id/LabelLocalEntrega" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
