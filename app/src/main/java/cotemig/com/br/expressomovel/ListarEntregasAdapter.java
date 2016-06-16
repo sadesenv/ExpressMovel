@@ -4,6 +4,7 @@ package cotemig.com.br.expressomovel;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -39,8 +40,8 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
 
         // create ViewHolder
 
-        ViewHolder holder = new ViewHolder(rowView);
-        return holder;
+        ViewHolder aHolder = new ViewHolder(rowView);
+        return aHolder;
     }
 
 
@@ -56,6 +57,10 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
         viewHolder.DtRetirada.setText(listaItens.get(position).getDataRetirada());
         viewHolder.LocalEntrega.setText(listaItens.get(position).getLocalEntrega());
         viewHolder.LocalRetirada.setText(listaItens.get(position).getLocalRetirada());
+
+        if (listaItens.get(position).getIdEntregador() != null) {
+            viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(aContext, R.color.green));
+        }
 
     }
 

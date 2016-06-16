@@ -39,8 +39,8 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
 
         // create ViewHolder
 
-        ViewHolder holder = new ViewHolder(rowView);
-        return holder;
+        ViewHolder aHolder = new ViewHolder(rowView);
+        return aHolder;
     }
 
 
@@ -120,9 +120,13 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
 
                         case R.id.deletar:
                             ItemDAO itemDAO = new ItemDAO(aContext);
-                            itemDAO.deletar(listaItens.get(position));
-                            removeAt(getAdapterPosition());
-                            Toast.makeText(aContext, "Deletar " + itemDescricao, Toast.LENGTH_SHORT).show();
+                            if (listaItens.get(position).getIdEntregador() != null) {
+                                itemDAO.deletar(listaItens.get(position));
+                                removeAt(getAdapterPosition());
+                                Toast.makeText(aContext, "Deletar " + itemDescricao, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(aContext, "Item " + itemDescricao + "não pode ser excluido!", Toast.LENGTH_SHORT).show();
+                            }
                             break;
                         default:
                             return false;
