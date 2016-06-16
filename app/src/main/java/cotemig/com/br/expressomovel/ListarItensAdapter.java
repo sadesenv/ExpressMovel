@@ -57,7 +57,7 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
         viewHolder.DtRetirada.setText(listaItens.get(position).getDataRetirada());
         viewHolder.LocalEntrega.setText(listaItens.get(position).getLocalEntrega());
         viewHolder.LocalRetirada.setText(listaItens.get(position).getLocalRetirada());
-        viewHolder.LocalRetirada.setText(String.valueOf(listaItens.get(position).getIdEntregador()));
+        viewHolder.Entregador.setText(String.valueOf(listaItens.get(position).getIdEntregador()));
 
     }
 

@@ -72,13 +72,14 @@
 
         <TextView
             android:id="@+id/pedido_LabelEntregador"
-            style="@style/titulo"
+            style="@style/AppTheme.texto.card"
             android:layout_below="@id/pedido_LocalEntrega"
-            android:text="Entregador"/>
+            android:text="@string/pedido_entregador"/>
 
         <TextView
             android:id="@+id/pedido_Entregador"
-            style="@style/titulo"
+            style="@style/AppTheme.texto.card"
+            android:layout_below="@id/pedido_LocalEntrega"
             android:layout_toRightOf="@id/pedido_LabelEntregador" />
 
     </RelativeLayout>

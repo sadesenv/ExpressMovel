@@ -35,4 +35,5 @@
     <string name="data_retirada">Data Retirada:</string>
     <string name="descricao">Descrição:</string>
     <string name="title_activity_cadastrar_item">CadastrarItemActivity</string>
+    <string name="pedido_entregador">Entregador:</string>
 </resources>
