@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -131,7 +132,7 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
                             listaItens.get(position).setIdEntregador(idUsuario);
                             ItemDAO itemDAO = new ItemDAO(aContext);
                             itemDAO.aceitarEntrega(listaItens.get(position));
-
+                            Log.i("idEntregador", ": "+listaItens.get(position).getIdEntregador());
                             break;
                         case R.id.entrega_Cancelar:
                             // do what you need .

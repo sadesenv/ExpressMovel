@@ -40,7 +40,7 @@ public class ItemDAO {
         values.put("dataEntrega", item.getDataEntrega());
         values.put("localRetirada", item.getLocalRetirada());
         values.put("localEntrega", item.getLocalEntrega());
-
+        values.put("idCliente", item.getIdCliente());
 
 
         return values;
@@ -62,9 +62,9 @@ public class ItemDAO {
         return values;
     }
 
-    public ArrayList<Item> getTodositens() {
+    public ArrayList<Item> getListaItensCliente(Long id) {
 
-        String sql = "select * from item";
+        String sql = "select * from item where idCliente = " + id;
 
         ArrayList<Item> itens = new ArrayList<Item>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -85,6 +85,8 @@ public class ItemDAO {
 
             itens.add(item);
 
+
+
         }
         cursor.close();
 
@@ -92,6 +94,41 @@ public class ItemDAO {
 
         return itens;
     }
+
+
+    public ArrayList<Item> getListaItensEntregador(Long id) {
+
+        String sql = "select * from item where idCliente = " + id + " or idEntregador = " + id + " or idEntregador is null";
+
+        ArrayList<Item> itens = new ArrayList<Item>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+        while(cursor.moveToNext()){
+            Item item = new Item();
+            item.setIdItem(cursor.getLong(cursor.getColumnIndex("idItem")));
+            item.setDescricao(cursor.getString(cursor.getColumnIndex("descricao")));
+            item.setDataRetirada(cursor.getString(cursor.getColumnIndex("dataRetirada")));
+            item.setDataEntrega(cursor.getString(cursor.getColumnIndex("dataEntrega")));
+            item.setLocalRetirada(cursor.getString(cursor.getColumnIndex("localRetirada")));
+            item.setLocalEntrega(cursor.getString(cursor.getColumnIndex("localEntrega")));
+            item.setIdEntregador(cursor.getLong(cursor.getColumnIndex("idEntregador")));
+            item.setIdCliente(cursor.getLong(cursor.getColumnIndex("idCliente")));
+            item.setPreco(cursor.getDouble(cursor.getColumnIndex("preco")));
+
+            itens.add(item);
+
+
+
+        }
+        cursor.close();
+
+        db.close();
+
+        return itens;
+    }
+
 
     public void deletar(Item item){
 

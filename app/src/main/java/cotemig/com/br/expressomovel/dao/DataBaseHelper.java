@@ -41,7 +41,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "localRetirada text not null, " +
                 "localEntrega text not null, " +
                 "idEntregador int, " +
-                "idCliente int, " +
+                "idCliente INTEGER, " +
                 "preco float);";
 
         db.execSQL(sql);

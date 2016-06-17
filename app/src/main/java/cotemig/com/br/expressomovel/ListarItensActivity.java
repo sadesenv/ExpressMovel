@@ -107,10 +107,20 @@ public class ListarItensActivity extends AppCompatActivity {
         carregaItens();
     }
 
+    private long getIdUsuario() {
+        UsuarioDAO dao = new UsuarioDAO(this);
+        return dao.getId();
+
+    }
+
     private void carregaItens() {
         ItemDAO dao = new ItemDAO(this);
         this.itens.clear();
-        this.itens = dao.getTodositens();
+        this.itens = dao.getListaItensCliente(getIdUsuario());
+
+        for (Item i : itens){
+            Toast.makeText(ListarItensActivity.this, "idCliente " + i.getIdCliente(), Toast.LENGTH_SHORT).show();
+        }
 
         itemAdapter = new ListarItensAdapter(ListarItensActivity.this, itens);
 
