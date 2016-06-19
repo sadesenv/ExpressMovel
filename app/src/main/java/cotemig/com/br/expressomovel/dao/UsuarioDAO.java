@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringDef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,5 +145,26 @@ public class UsuarioDAO {
         db.close();
 
         return id;
+    }
+
+    public String getNome(Long id) {
+
+        String sql = "select nome from usuario where id_usuario = "+ String.valueOf(id);
+
+        String nome = null;
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToNext()){
+            nome = cursor.getString(cursor.getColumnIndex("nome"));
+
+        }
+        cursor.close();
+
+        db.close();
+
+        return nome;
     }
 }

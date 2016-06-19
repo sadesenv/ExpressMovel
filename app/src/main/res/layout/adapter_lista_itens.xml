@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/pedido_LabelRetirada"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/pedido_Id"
             android:text="@string/data_retirada" />
 
@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/pedido_tvLabelEntrega"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/pedido_LabelRetirada"
             android:text="@string/data_entrega" />
 
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/pedido_LabelLocalRetirada"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/pedido_DtEntrega"
             android:text="@string/local_retirada" />
 
@@ -60,7 +60,7 @@
 
         <TextView
             android:id="@+id/pedido_LabelLocalEntrega"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/pedido_LabelLocalRetirada"
             android:text="@string/local_entrega" />
 
@@ -72,7 +72,7 @@
 
         <TextView
             android:id="@+id/pedido_LabelEntregador"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/pedido_LocalEntrega"
             android:text="@string/pedido_entregador"/>
 

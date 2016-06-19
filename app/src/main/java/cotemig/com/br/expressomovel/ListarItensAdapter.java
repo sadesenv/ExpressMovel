@@ -20,7 +20,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cotemig.com.br.expressomovel.Entidades.Item;
+import cotemig.com.br.expressomovel.Entidades.Usuario;
 import cotemig.com.br.expressomovel.dao.ItemDAO;
+import cotemig.com.br.expressomovel.dao.UsuarioDAO;
 
 public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.ViewHolder> {
     private static ArrayList<Item> listaItens;
@@ -47,7 +49,6 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
 
@@ -57,7 +58,9 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
         viewHolder.DtRetirada.setText(listaItens.get(position).getDataRetirada());
         viewHolder.LocalEntrega.setText(listaItens.get(position).getLocalEntrega());
         viewHolder.LocalRetirada.setText(listaItens.get(position).getLocalRetirada());
-        viewHolder.Entregador.setText(String.valueOf(listaItens.get(position).getIdEntregador()));
+
+        UsuarioDAO dao = new UsuarioDAO(aContext);
+        viewHolder.Entregador.setText(dao.getNome(listaItens.get(position).getIdEntregador()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -99,7 +102,7 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
         }
 
         private void showPopup(final View v, final int position) {
-            PopupMenu popup = new PopupMenu(v.getContext(), v);
+            PopupMenu popup = new PopupMenu(aContext, v);
             MenuInflater inflate = popup.getMenuInflater();
             inflate.inflate(R.menu.menu_listar_itens, popup.getMenu());
 
