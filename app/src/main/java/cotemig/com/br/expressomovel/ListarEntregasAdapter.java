@@ -54,14 +54,15 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
         // - replace the contents of the view with that itemsData
 
         viewHolder.Id.setText(String.valueOf(listaItens.get(position).getIdItem()));
+        viewHolder.Descricao.setText(listaItens.get(position).getDescricao());
         viewHolder.DtEntrega.setText(listaItens.get(position).getDataEntrega());
         viewHolder.DtRetirada.setText(listaItens.get(position).getDataRetirada());
         viewHolder.LocalEntrega.setText(listaItens.get(position).getLocalEntrega());
         viewHolder.LocalRetirada.setText(listaItens.get(position).getLocalRetirada());
 
-        if (listaItens.get(position).getIdEntregador() != null) {
-            viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(aContext, R.color.green));
-        }
+//        if (listaItens.get(position).getIdEntregador() == idUsuario) {
+//            viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(aContext, R.color.green));
+//        }
 
     }
 

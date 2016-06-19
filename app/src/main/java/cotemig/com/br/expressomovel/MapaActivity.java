@@ -61,10 +61,10 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+//        if (android.os.Build.VERSION.SDK_INT > 9) {
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//        }
         Intent i = getIntent();
         Bundle b = i.getExtras();
         if (b.containsKey("Origem")) {
@@ -109,7 +109,7 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Address address = addresses.get(0);
+
         if (addresses.size() > 0) {
             latitude = addresses.get(0).getLatitude();
             longitude = addresses.get(0).getLongitude();
@@ -227,8 +227,7 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
             final JSONObject json = new JSONObject(result);
             JSONArray routeArray = json.getJSONArray("routes");
             JSONObject routes = routeArray.getJSONObject(0);
-            JSONObject overviewPolylines = routes
-                    .getJSONObject("overview_polyline");
+            JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
             String encodedString = overviewPolylines.getString("points");
             List<LatLng> list = decodePoly(encodedString);
 
@@ -238,7 +237,7 @@ public class MapaActivity extends FragmentActivity implements OnMapReadyCallback
                 line = mMap.addPolyline(new PolylineOptions()
                         .add(new LatLng(src.latitude, src.longitude),
                                 new LatLng(dest.latitude, dest.longitude))
-                        .width(5).color(Color.BLUE).geodesic(true));
+                        .width(7).color(Color.BLUE).geodesic(true));
             }
 
         } catch (Exception e) {

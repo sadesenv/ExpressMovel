@@ -77,7 +77,7 @@ public class ListarItensActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (item.getItemId()) {
+        switch (id) {
 
             case R.id.alterar_perfil:
 

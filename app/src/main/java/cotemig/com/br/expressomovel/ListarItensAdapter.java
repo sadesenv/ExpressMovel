@@ -58,7 +58,6 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
         viewHolder.LocalEntrega.setText(listaItens.get(position).getLocalEntrega());
         viewHolder.LocalRetirada.setText(listaItens.get(position).getLocalRetirada());
         viewHolder.Entregador.setText(String.valueOf(listaItens.get(position).getIdEntregador()));
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

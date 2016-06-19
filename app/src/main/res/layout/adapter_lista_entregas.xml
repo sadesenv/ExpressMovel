@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -24,7 +23,7 @@
 
         <TextView
             android:id="@+id/entrega_LabelRetirada"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/entrega_Id"
             android:text="@string/data_retirada" />
 
@@ -36,7 +35,7 @@
 
         <TextView
             android:id="@+id/entrega_LabelEntrega"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/entrega_LabelRetirada"
             android:text="@string/data_entrega" />
 
@@ -48,7 +47,7 @@
 
         <TextView
             android:id="@+id/entrega_LabelLocalRetirada"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/entrega_DtEntrega"
             android:text="@string/local_retirada" />
 
@@ -60,7 +59,7 @@
 
         <TextView
             android:id="@+id/entrega_LabelLocalEntrega"
-            style="@style/AppTheme.texto.card"
+            style="@style/subtitulo"
             android:layout_below="@id/entrega_LabelLocalRetirada"
             android:text="@string/local_entrega" />
 
@@ -81,7 +80,6 @@
             android:clickable="true"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_map_route_24dp" />
-
 
     </RelativeLayout>
 
