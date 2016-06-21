@@ -1,23 +1,33 @@
 package cotemig.com.br.expressomovel.Entidades;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
  * Created by pedro on 08/06/16.
  */
+
 public class Usuario implements Serializable{
-
+    @SerializedName("idUsuario")
     public Long idUsuario;
-
+    @SerializedName("nome")
     private String nome;
+    @SerializedName("endereco")
     private String endereco;
+    @SerializedName("bairro")
     private String bairro;
+    @SerializedName("cidade")
     private String cidade;
+    @SerializedName("telefone")
     private String telefone;
+    @SerializedName("email")
     private String email;
-
+    @SerializedName("tipoPerfil")
     private String tipoPerfil;
+    @SerializedName("tipoVeiculo")
     private String tipoVeiculo;
+    @SerializedName("placa")
     private String placa;
 
     public Long getIdUsuario() {

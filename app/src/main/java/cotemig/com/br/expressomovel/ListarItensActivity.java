@@ -17,8 +17,12 @@ import java.util.ArrayList;
 
 import cotemig.com.br.expressomovel.Entidades.Item;
 import cotemig.com.br.expressomovel.Entidades.Usuario;
-import cotemig.com.br.expressomovel.dao.ItemDAO;
 import cotemig.com.br.expressomovel.dao.UsuarioDAO;
+import cotemig.com.br.expressomovel.rest.ApiClient;
+import cotemig.com.br.expressomovel.rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ListarItensActivity extends AppCompatActivity {
@@ -114,16 +118,35 @@ public class ListarItensActivity extends AppCompatActivity {
     }
 
     private void carregaItens() {
-        ItemDAO dao = new ItemDAO(this);
+        //ItemDAO dao = new ItemDAO(this);
         this.itens.clear();
-        this.itens = dao.getListaItensCliente(getIdUsuario());
+        //this.itens = dao.getListaItensCliente(getIdUsuario());
+
+
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        Call<ArrayList<Item>> call = apiService.getItens();
+        call.enqueue(new Callback<ArrayList<Item>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
+                int statusCode = response.code();
+                itens = response.body();
+
+                itemAdapter = new ListarItensAdapter(ListarItensActivity.this, itens);
+                listaItens.setAdapter(itemAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
+                // Log error here since request failed
+                Toast.makeText(ListarItensActivity.this, "Error: "+t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         for (Item i : itens){
             Toast.makeText(ListarItensActivity.this, "idCliente " + i.getIdCliente(), Toast.LENGTH_SHORT).show();
         }
 
-        itemAdapter = new ListarItensAdapter(ListarItensActivity.this, itens);
 
-        listaItens.setAdapter(itemAdapter);
     }
 }
