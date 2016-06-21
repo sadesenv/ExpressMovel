@@ -7,9 +7,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import cotemig.com.br.expressomovel.Entidades.Item;
 import cotemig.com.br.expressomovel.dao.ItemDAO;
 import cotemig.com.br.expressomovel.dao.UsuarioDAO;
+import cotemig.com.br.expressomovel.rest.ApiClient;
+import cotemig.com.br.expressomovel.rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CadastrarItemActivity extends AppCompatActivity {
 
@@ -59,6 +66,24 @@ public class CadastrarItemActivity extends AppCompatActivity {
 
                     dao.insere(item);
                     Toast.makeText(CadastrarItemActivity.this, "Item " + item.getIdCliente() + " cadastrado", Toast.LENGTH_SHORT).show();
+
+                    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+                    Call<Item> call = apiService.insereItem(item);
+                    call.enqueue(new Callback<Item>() {
+                        @Override
+                        public void onResponse(Call<Item> call, Response<Item> response) {
+                            int statusCode = response.code();
+//                            item = response.body();
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Item> call, Throwable t) {
+                            // Log error here since request failed
+                            Toast.makeText(CadastrarItemActivity.this, "Error: "+t.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
                 finish();
