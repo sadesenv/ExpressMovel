@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +80,8 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
         public TextView DtRetirada;
         public TextView LocalEntrega;
         public TextView Entregador;
+        public ImageButton btnEditar;
+        public ImageButton btnCancelar;
 
         public ViewHolder(View rowView) {
             super(rowView);
@@ -90,53 +93,37 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
             DtRetirada = (TextView) rowView.findViewById(R.id.pedido_DtRetirada);
             LocalEntrega = (TextView) rowView.findViewById(R.id.pedido_LocalEntrega);
             Entregador = (TextView) rowView.findViewById(R.id.pedido_Entregador);
+            btnEditar = (ImageButton) rowView.findViewById(R.id.pedido_btnEdit);
+            btnCancelar = (ImageButton) rowView.findViewById(R.id.pedido_btnCancelar);
 
-            rowView.setOnLongClickListener(new View.OnLongClickListener() {
+            btnEditar.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public boolean onLongClick(View view) {
-                    showPopup(view, getAdapterPosition());
-                    return false;
+                public void onClick(View v) {
+                    String itemDescricao = listaItens.get(getAdapterPosition()).getDescricao();
+                    Intent vaiProFormulario = new Intent(aContext, CadastrarItemActivity.class);
+                    vaiProFormulario.putExtra("item", listaItens.get(getAdapterPosition()));
+                    aContext.startActivity(vaiProFormulario);
+                    Toast.makeText(aContext, "Editar " + itemDescricao, Toast.LENGTH_SHORT).show();
                 }
             });
-        }
 
-        private void showPopup(final View v, final int position) {
-            PopupMenu popup = new PopupMenu(aContext, v);
-            MenuInflater inflate = popup.getMenuInflater();
-            inflate.inflate(R.menu.menu_listar_itens, popup.getMenu());
-
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            btnCancelar.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    String itemDescricao = listaItens.get(position).getDescricao();
-
-                    switch (item.getItemId()) {
-                        case R.id.editar:
-                            Intent vaiProFormulario = new Intent(aContext, CadastrarItemActivity.class);
-                            vaiProFormulario.putExtra("item", listaItens.get(position));
-                            aContext.startActivity(vaiProFormulario);
-                            Toast.makeText(aContext, "Editar " + itemDescricao, Toast.LENGTH_SHORT).show();
-                            break;
-
-                        case R.id.deletar:
-                            ItemDAO itemDAO = new ItemDAO(aContext);
-                            if (listaItens.get(position).getIdEntregador() != null) {
-                                itemDAO.deletar(listaItens.get(position));
-                                removeAt(getAdapterPosition());
-                                Toast.makeText(aContext, "Deletar " + itemDescricao, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(aContext, "Item " + itemDescricao + "não pode ser excluido!", Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                        default:
-                            return false;
+                public void onClick(View v) {
+                    String itemDescricao = listaItens.get(getAdapterPosition()).getDescricao();
+                    ItemDAO itemDAO = new ItemDAO(aContext);
+                    if (listaItens.get(getAdapterPosition()).getIdEntregador() != 0) {
+                        itemDAO.deletar(listaItens.get(getAdapterPosition()));
+                        removeAt(getAdapterPosition());
+                        Toast.makeText(aContext, "Deletar " + itemDescricao, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(aContext, "Item " + itemDescricao + "não pode ser excluido!", Toast.LENGTH_SHORT).show();
                     }
-                    return false;
                 }
             });
-            popup.show();
+
         }
     }
 
