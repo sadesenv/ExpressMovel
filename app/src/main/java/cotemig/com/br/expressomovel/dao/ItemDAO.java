@@ -164,4 +164,14 @@ public class ItemDAO {
         db.update("item", values, "idItem = ?", param);
         db.close();
     }
+
+    public void cancelarEntrega(Item item) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("idItem", item.getIdItem());
+        values.put("idEntregador", 0);
+        String[] param = {String.valueOf(item.getIdItem())};
+        db.update("item", values, "idItem = ?", param);
+        db.close();
+    }
 }

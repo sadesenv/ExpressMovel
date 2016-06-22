@@ -60,10 +60,14 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
         viewHolder.LocalEntrega.setText(listaItens.get(position).getLocalEntrega());
         viewHolder.LocalRetirada.setText(listaItens.get(position).getLocalRetirada());
 
-        if (listaItens.get(position).getIdEntregador() != 0) {
-            viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(aContext, R.color.green));
+        long idEntregador = listaItens.get(position).getIdEntregador();
+        if (idEntregador == 0) {
+            viewHolder.btnCancelar.setVisibility(View.GONE);
+            viewHolder.btnAceitar.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.btnCancelar.setVisibility(View.VISIBLE);
+            viewHolder.btnAceitar.setVisibility(View.GONE);
         }
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -73,7 +77,7 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
     }
 
     // inner class to hold a reference to each item of RecyclerView
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView Id;
         public TextView Descricao;
@@ -82,6 +86,8 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
         public TextView DtRetirada;
         public TextView LocalEntrega;
         public ImageButton btnRoute;
+        public ImageButton btnAceitar;
+        public ImageButton btnCancelar;
 
         public ViewHolder(View rowView) {
             super(rowView);
@@ -93,6 +99,37 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
             DtRetirada = (TextView) rowView.findViewById(R.id.entrega_DtRetirada);
             LocalEntrega = (TextView) rowView.findViewById(R.id.entrega_LocalEntrega);
             btnRoute = (ImageButton) rowView.findViewById(R.id.entrega_btnRoute);
+            btnAceitar = (ImageButton) rowView.findViewById(R.id.entrega_btnAceitar);
+            btnCancelar = (ImageButton) rowView.findViewById(R.id.entrega_btnCancelar);
+
+            btnAceitar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    listaItens.get(getAdapterPosition()).setIdEntregador(idUsuario);
+                    ItemDAO itemDAO = new ItemDAO(aContext);
+                    itemDAO.aceitarEntrega(listaItens.get(getAdapterPosition()));
+                    refreshAt(getAdapterPosition());
+                    Log.i("idEntregador", ": "+listaItens.get(getAdapterPosition()).getIdEntregador());
+                }
+            });
+
+            btnCancelar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    String itemDescricao = listaItens.get(getAdapterPosition()).getDescricao();
+                    if (listaItens.get(getAdapterPosition()).getIdEntregador() == idUsuario) {
+                        long id = 0;
+                        listaItens.get(getAdapterPosition()).setIdEntregador(id);
+                        ItemDAO itemDAO = new ItemDAO(aContext);
+                        itemDAO.cancelarEntrega(listaItens.get(getAdapterPosition()));
+                        refreshAt(getAdapterPosition());
+                    } else {
+                        Toast.makeText(aContext, "Item " + itemDescricao + "não pode ser excluido!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
             btnRoute.setOnClickListener(new View.OnClickListener() {
 
@@ -106,47 +143,11 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
                     aContext.startActivity(i);
                 }
             });
-
-            rowView.setOnLongClickListener(new View.OnLongClickListener() {
-
-                @Override
-                public boolean onLongClick(View v) {
-                    showPopup(v, getAdapterPosition());
-                    return true;
-
-                }
-            });
-
         }
+    }
 
-        private void showPopup(final View v, final int position) {
-            PopupMenu popup = new PopupMenu(v.getContext(), v);
-            MenuInflater inflate = popup.getMenuInflater();
-            inflate.inflate(R.menu.menu_listar_entregas, popup.getMenu());
-
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.entrega_Aceitar:
-                            listaItens.get(position).setIdEntregador(idUsuario);
-                            ItemDAO itemDAO = new ItemDAO(aContext);
-                            itemDAO.aceitarEntrega(listaItens.get(position));
-                            Log.i("idEntregador", ": "+listaItens.get(position).getIdEntregador());
-                            break;
-                        case R.id.entrega_Cancelar:
-                            // do what you need .
-                            break;
-                        default:
-                            return false;
-                    }
-                    return false;
-                }
-            });
-            popup.show();
-        }
-
+    public void refreshAt(int position) {
+        notifyItemChanged(position);
     }
 
 }

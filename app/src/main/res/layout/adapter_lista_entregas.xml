@@ -81,6 +81,35 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_map_route_24dp" />
 
+        <ImageButton
+            android:id="@+id/entrega_btnAceitar"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/image_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/image_margin_end"
+            android:layout_marginTop="@dimen/image_margin_end"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_check_black_24dp"
+            android:layout_below="@id/entrega_btnRoute"/>
+
+        <ImageButton
+            android:id="@+id/entrega_btnCancelar"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/image_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/image_margin_end"
+            android:layout_marginTop="@dimen/image_margin_end"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_cancel_24dp"
+            android:layout_below="@id/entrega_btnRoute"/>
+
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
