@@ -71,12 +71,6 @@
                 android:hint="@string/placa"
                 android:inputType="text"
                 android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btnSalvarUsuario"
-                style="@style/AppTheme.btn"
-                android:onClick="Salvar"
-                android:text="@string/salvar" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

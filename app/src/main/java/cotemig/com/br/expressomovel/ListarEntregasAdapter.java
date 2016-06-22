@@ -117,7 +117,6 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
                                     ItemDAO itemDAO = new ItemDAO(aContext);
                                     itemDAO.aceitarEntrega(listaItens.get(getAdapterPosition()));
                                     refreshAt(getAdapterPosition());
-                                    Log.i("idEntregador", ": "+listaItens.get(getAdapterPosition()).getIdEntregador());
                                 }
                             })
                             .setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
@@ -147,7 +146,7 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
                                         itemDAO.cancelarEntrega(listaItens.get(getAdapterPosition()));
                                         refreshAt(getAdapterPosition());
                                     } else {
-                                        Toast.makeText(aContext, "Item " + itemDescricao + "não pode ser excluido!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(aContext, "Entrega " + itemDescricao + "não pode ser cancelada!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             })
