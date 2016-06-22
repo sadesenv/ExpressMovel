@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable{
     @SerializedName("idUsuario")
-    public Long idUsuario;
+    public Integer idUsuario;
     @SerializedName("nome")
     private String nome;
     @SerializedName("endereco")
@@ -30,11 +30,11 @@ public class Usuario implements Serializable{
     @SerializedName("placa")
     private String placa;
 
-    public Long getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 

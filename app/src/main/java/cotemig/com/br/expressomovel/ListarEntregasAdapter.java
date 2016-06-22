@@ -25,9 +25,9 @@ import cotemig.com.br.expressomovel.dao.ItemDAO;
 public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAdapter.ViewHolder> {
     private static ArrayList<Item> listaItens;
     public static Context aContext;
-    public static Long idUsuario;
+    public static Integer idUsuario;
 
-    public ListarEntregasAdapter(Context context, ArrayList<Item> i, long id) {
+    public ListarEntregasAdapter(Context context, ArrayList<Item> i, Integer id) {
         aContext = context;
         listaItens = i;
         idUsuario = id;

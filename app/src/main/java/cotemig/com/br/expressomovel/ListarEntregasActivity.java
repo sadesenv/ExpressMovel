@@ -45,7 +45,7 @@ public class ListarEntregasActivity extends AppCompatActivity {
         return dao.getPerfil();
     }
 
-    private long getIdUsuario() {
+    private Integer getIdUsuario() {
         UsuarioDAO dao = new UsuarioDAO(this);
         return dao.getId();
 

@@ -63,7 +63,7 @@ public class UsuarioDAO {
 
         if(cursor.moveToNext()){
             usuario = new Usuario();
-            usuario.setIdUsuario(cursor.getLong(cursor.getColumnIndex("id_usuario")));
+            usuario.setIdUsuario(cursor.getInt(cursor.getColumnIndex("id_usuario")));
             usuario.setNome(cursor.getString(cursor.getColumnIndex("nome")));
             usuario.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
             usuario.setBairro(cursor.getString(cursor.getColumnIndex("bairro")));
@@ -126,18 +126,18 @@ public class UsuarioDAO {
         return perfil;
     }
 
-    public Long getId() {
+    public Integer getId() {
 
         String sql = "select id_usuario from usuario";
 
-        Long id = null;
+        Integer id = null;
 
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToNext()){
-            id = cursor.getLong(cursor.getColumnIndex("id_usuario"));
+            id = cursor.getInt(cursor.getColumnIndex("id_usuario"));
 
         }
         cursor.close();
@@ -147,7 +147,7 @@ public class UsuarioDAO {
         return id;
     }
 
-    public String getNome(Long id) {
+    public String getNome(Integer id) {
 
         String sql = "select nome from usuario where id_usuario = "+ String.valueOf(id);
 

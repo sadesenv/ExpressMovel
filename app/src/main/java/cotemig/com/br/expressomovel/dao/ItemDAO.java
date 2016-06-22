@@ -73,14 +73,14 @@ public class ItemDAO {
 
         while(cursor.moveToNext()){
             Item item = new Item();
-            item.setIdItem(cursor.getLong(cursor.getColumnIndex("idItem")));
+            item.setIdItem(cursor.getInt(cursor.getColumnIndex("idItem")));
             item.setDescricao(cursor.getString(cursor.getColumnIndex("descricao")));
             item.setDataRetirada(cursor.getString(cursor.getColumnIndex("dataRetirada")));
             item.setDataEntrega(cursor.getString(cursor.getColumnIndex("dataEntrega")));
             item.setLocalRetirada(cursor.getString(cursor.getColumnIndex("localRetirada")));
             item.setLocalEntrega(cursor.getString(cursor.getColumnIndex("localEntrega")));
-            item.setIdEntregador(cursor.getLong(cursor.getColumnIndex("idEntregador")));
-            item.setIdCliente(cursor.getLong(cursor.getColumnIndex("idCliente")));
+            item.setIdEntregador(cursor.getInt(cursor.getColumnIndex("idEntregador")));
+            item.setIdCliente(cursor.getInt(cursor.getColumnIndex("idCliente")));
             item.setPreco(cursor.getDouble(cursor.getColumnIndex("preco")));
 
             itens.add(item);
@@ -96,7 +96,7 @@ public class ItemDAO {
     }
 
 
-    public ArrayList<Item> getListaItensEntregador(Long id) {
+    public ArrayList<Item> getListaItensEntregador(Integer id) {
 
         String sql = "select * from item where idCliente = " + id + " or idEntregador = " + id + " or idEntregador is null";
 
@@ -107,14 +107,14 @@ public class ItemDAO {
 
         while(cursor.moveToNext()){
             Item item = new Item();
-            item.setIdItem(cursor.getLong(cursor.getColumnIndex("idItem")));
+            item.setIdItem(cursor.getInt(cursor.getColumnIndex("idItem")));
             item.setDescricao(cursor.getString(cursor.getColumnIndex("descricao")));
             item.setDataRetirada(cursor.getString(cursor.getColumnIndex("dataRetirada")));
             item.setDataEntrega(cursor.getString(cursor.getColumnIndex("dataEntrega")));
             item.setLocalRetirada(cursor.getString(cursor.getColumnIndex("localRetirada")));
             item.setLocalEntrega(cursor.getString(cursor.getColumnIndex("localEntrega")));
-            item.setIdEntregador(cursor.getLong(cursor.getColumnIndex("idEntregador")));
-            item.setIdCliente(cursor.getLong(cursor.getColumnIndex("idCliente")));
+            item.setIdEntregador(cursor.getInt(cursor.getColumnIndex("idEntregador")));
+            item.setIdCliente(cursor.getInt(cursor.getColumnIndex("idCliente")));
             item.setPreco(cursor.getDouble(cursor.getColumnIndex("preco")));
 
             itens.add(item);

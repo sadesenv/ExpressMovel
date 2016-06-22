@@ -10,7 +10,7 @@ import cotemig.com.br.expressomovel.dao.UsuarioDAO;
 
 public class BoasVindasActivity extends Activity {
 
-    private static int SPLASH_TIME_OUT = 1000;
+    private static int SPLASH_TIME_OUT = 2000;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

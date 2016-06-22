@@ -4,16 +4,10 @@ package cotemig.com.br.expressomovel;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,9 +15,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cotemig.com.br.expressomovel.Entidades.Item;
-import cotemig.com.br.expressomovel.Entidades.Usuario;
-import cotemig.com.br.expressomovel.dao.ItemDAO;
 import cotemig.com.br.expressomovel.dao.UsuarioDAO;
+import cotemig.com.br.expressomovel.rest.ApiClient;
+import cotemig.com.br.expressomovel.rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.ViewHolder> {
     private static ArrayList<Item> listaItens;
@@ -113,9 +110,31 @@ public class ListarItensAdapter extends RecyclerView.Adapter<ListarItensAdapter.
                 @Override
                 public void onClick(View v) {
                     String itemDescricao = listaItens.get(getAdapterPosition()).getDescricao();
-                    ItemDAO itemDAO = new ItemDAO(aContext);
-                    if (listaItens.get(getAdapterPosition()).getIdEntregador() != 0) {
-                        itemDAO.deletar(listaItens.get(getAdapterPosition()));
+                    Integer idEntregador = listaItens.get(getAdapterPosition()).getIdEntregador();
+                    if (idEntregador == null) {
+                        Integer idItem = listaItens.get(getAdapterPosition()).getIdItem();
+
+                        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+                        Call<Integer> call = apiService.deleteItem(idItem);
+                        call.enqueue(new Callback<Integer>() {
+                            @Override
+                            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                int statusCode = response.code();
+                                Integer resposta = response.body();
+
+                                Toast.makeText(aContext, "Item " + resposta.toString() + " deletado", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<Integer> call, Throwable t) {
+                                // Log error here since request failed
+                                Toast.makeText(aContext, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
                         removeAt(getAdapterPosition());
                         Toast.makeText(aContext, "Deletar " + itemDescricao, Toast.LENGTH_SHORT).show();
                     } else {

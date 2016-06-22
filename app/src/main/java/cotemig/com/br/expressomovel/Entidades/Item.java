@@ -1,6 +1,11 @@
 package cotemig.com.br.expressomovel.Entidades;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -9,21 +14,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item implements Serializable{
     @SerializedName("idItem")
-    private Long idItem;
+    private Integer idItem;
     @SerializedName("descricao")
     private String descricao;
     @SerializedName("dataRetirada")
-    private String dataRetirada;
+    private Date dataRetirada;
     @SerializedName("dataEntrega")
-    private String dataEntrega;
+    private Date dataEntrega;
     @SerializedName("localRetirada")
     private String localRetirada;
     @SerializedName("localEntrega")
     private String localEntrega;
     @SerializedName("idEntregador")
-    private Long idEntregador;
+    private Integer idEntregador;
     @SerializedName("idCliente")
-    private Long idCliente;
+    private Integer idCliente;
     @SerializedName("preco")
     private Double preco;
     @SerializedName("status")
@@ -33,11 +38,11 @@ public class Item implements Serializable{
     public Item() {
     }
 
-    public Long getIdItem() {
+    public Integer getIdItem() {
         return idItem;
     }
 
-    public void setIdItem(Long iditem) {
+    public void setIdItem(Integer iditem) {
         this.idItem = iditem;
     }
 
@@ -50,19 +55,29 @@ public class Item implements Serializable{
     }
 
     public String getDataRetirada() {
-        return dataRetirada;
+        return dataRetirada.toString();
     }
 
     public void setDataRetirada(String dataRetirada) {
-        this.dataRetirada = dataRetirada;
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            this.dataRetirada = formatter.parse(dataRetirada);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getDataEntrega() {
-        return dataEntrega;
+        return dataEntrega.toString();
     }
 
     public void setDataEntrega(String dataEntrega) {
-        this.dataEntrega = dataEntrega;
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            this.dataEntrega = formatter.parse(dataEntrega);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getLocalRetirada() {
@@ -81,19 +96,19 @@ public class Item implements Serializable{
         this.localEntrega = localEntrega;
     }
 
-    public Long getIdEntregador() {
+    public Integer getIdEntregador() {
         return idEntregador;
     }
 
-    public void setIdEntregador(Long idEntregador) {
+    public void setIdEntregador(Integer idEntregador) {
         this.idEntregador = idEntregador;
     }
 
-    public Long getIdCliente() {
+    public Integer getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(Long idCliente) {
+    public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -109,4 +124,5 @@ public class Item implements Serializable{
     public String toString() {
         return idItem + " - " + descricao;
     }
+
 }

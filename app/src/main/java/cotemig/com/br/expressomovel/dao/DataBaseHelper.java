@@ -20,7 +20,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table usuario(id_usuario integer primary key AUTOINCREMENT NOT NULL, " +
+        String sql = "create table usuario(id_usuario INTEGER primary key AUTOINCREMENT NOT NULL, " +
                 "nome text not null, " +
                 "endereco text, " +
                 "bairro text, " +
@@ -40,7 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "dataEntrega text not null, " +
                 "localRetirada text not null, " +
                 "localEntrega text not null, " +
-                "idEntregador int, " +
+                "idEntregador INTEGER, " +
                 "idCliente INTEGER, " +
                 "preco float);";
 

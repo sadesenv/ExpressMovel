@@ -32,10 +32,9 @@ public class CadastrarItemActivity extends AppCompatActivity {
         this.formHelper = new CadastroItemHelper(this);
 
         Item item = (Item) getIntent().getSerializableExtra("item");
-        if(item != null){
+        if (item != null) {
             formHelper.preencheFormulario(item);
         }
-
     }
 
     @Override
@@ -48,7 +47,7 @@ public class CadastrarItemActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem itemMenu) {
 
-        switch (itemMenu.getItemId()){
+        switch (itemMenu.getItemId()) {
 
             case R.id.menu_formulario:
 
@@ -56,32 +55,47 @@ public class CadastrarItemActivity extends AppCompatActivity {
 
                 ItemDAO dao = new ItemDAO(this);
 
-                if(item.getIdItem() != null){
-                    dao.atualiza(item);
-                    Toast.makeText(CadastrarItemActivity.this, "Item " + item.getDescricao() + " atualizado", Toast.LENGTH_SHORT).show();
-                } else{
-                    UsuarioDAO userDao = new UsuarioDAO(this);
-
-                    item.setIdCliente(userDao.getId());
-
-                    dao.insere(item);
-                    Toast.makeText(CadastrarItemActivity.this, "Item " + item.getIdCliente() + " cadastrado", Toast.LENGTH_SHORT).show();
-
+                if (item.getIdItem() != null) {
                     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-                    Call<Item> call = apiService.insereItem(item);
-                    call.enqueue(new Callback<Item>() {
+                    Call<Integer> call = apiService.atualizaItem(item);
+                    call.enqueue(new Callback<Integer>() {
                         @Override
-                        public void onResponse(Call<Item> call, Response<Item> response) {
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
                             int statusCode = response.code();
-//                            item = response.body();
+                            Integer resposta = response.body();
 
+                            Toast.makeText(CadastrarItemActivity.this, "Item " + resposta.toString() + " atualizado", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
-                        public void onFailure(Call<Item> call, Throwable t) {
+                        public void onFailure(Call<Integer> call, Throwable t) {
                             // Log error here since request failed
-                            Toast.makeText(CadastrarItemActivity.this, "Error: "+t.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CadastrarItemActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    UsuarioDAO userDao = new UsuarioDAO(this);
+
+                    item.setIdCliente(userDao.getId());
+                    item.setIdItem(0);
+
+                    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+                    Call<Integer> call = apiService.insereItem(item);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            int statusCode = response.code();
+                            Integer resposta = response.body();
+
+                            Toast.makeText(CadastrarItemActivity.this, "Item " + resposta.toString() + " cadastrado", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            // Log error here since request failed
+                            Toast.makeText(CadastrarItemActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

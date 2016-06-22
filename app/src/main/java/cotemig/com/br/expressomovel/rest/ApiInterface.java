@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cotemig.com.br.expressomovel.Entidades.Item;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -19,15 +20,15 @@ public interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @DELETE("item/item/{idItem}")
-    Call<ArrayList<Item>> deleteItem(@Path("idItem") long idItem);
+    Call<Integer> deleteItem(@Path("idItem") Integer idItem);
 
     @Headers("Content-Type: application/json")
-    @POST("item/item/{idItem}")
-    Call<Item> insereItem(@Path("item") Item item);
+    @POST("item/item")
+    Call<Integer> insereItem(@Body Item item);
 
     @Headers("Content-Type: application/json")
-    @PUT("item/item/{idItem}")
-    Call<ArrayList<Item>> atualizaItem(@Path("idItem") long idItem);
+    @PUT("item/item")
+    Call<Integer> atualizaItem(@Body Item item);
 
 
 //    @Headers("Content-Type: application/json")
