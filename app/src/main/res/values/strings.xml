@@ -36,4 +36,8 @@
     <string name="descricao">Descrição:</string>
     <string name="title_activity_cadastrar_item">CadastrarItemActivity</string>
     <string name="pedido_entregador">Entregador:</string>
+    <string name="cancelar_title">Cancelar Entrega</string>
+    <string name="cancelar_msg">Deseja cancelar esta entrega?</string>
+    <string name="aceitar_tittle">Aceitar Entrega</string>
+    <string name="aceitar_msg">Deseja aceitar esta entrega?</string>
 </resources>

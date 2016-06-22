@@ -1,7 +1,9 @@
 package cotemig.com.br.expressomovel;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -106,11 +108,24 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
 
                 @Override
                 public void onClick(View v) {
-                    listaItens.get(getAdapterPosition()).setIdEntregador(idUsuario);
-                    ItemDAO itemDAO = new ItemDAO(aContext);
-                    itemDAO.aceitarEntrega(listaItens.get(getAdapterPosition()));
-                    refreshAt(getAdapterPosition());
-                    Log.i("idEntregador", ": "+listaItens.get(getAdapterPosition()).getIdEntregador());
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle(R.string.aceitar_tittle)
+                            .setMessage(R.string.aceitar_msg)
+                            .setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    listaItens.get(getAdapterPosition()).setIdEntregador(idUsuario);
+                                    ItemDAO itemDAO = new ItemDAO(aContext);
+                                    itemDAO.aceitarEntrega(listaItens.get(getAdapterPosition()));
+                                    refreshAt(getAdapterPosition());
+                                    Log.i("idEntregador", ": "+listaItens.get(getAdapterPosition()).getIdEntregador());
+                                }
+                            })
+                            .setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .show();
                 }
             });
 
@@ -118,16 +133,31 @@ public class ListarEntregasAdapter extends RecyclerView.Adapter<ListarEntregasAd
 
                 @Override
                 public void onClick(View v) {
-                    String itemDescricao = listaItens.get(getAdapterPosition()).getDescricao();
-                    if (listaItens.get(getAdapterPosition()).getIdEntregador() == idUsuario) {
-                        long id = 0;
-                        listaItens.get(getAdapterPosition()).setIdEntregador(id);
-                        ItemDAO itemDAO = new ItemDAO(aContext);
-                        itemDAO.cancelarEntrega(listaItens.get(getAdapterPosition()));
-                        refreshAt(getAdapterPosition());
-                    } else {
-                        Toast.makeText(aContext, "Item " + itemDescricao + "não pode ser excluido!", Toast.LENGTH_SHORT).show();
-                    }
+
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle(R.string.cancelar_title)
+                            .setMessage(R.string.cancelar_msg)
+                            .setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String itemDescricao = listaItens.get(getAdapterPosition()).getDescricao();
+                                    if (listaItens.get(getAdapterPosition()).getIdEntregador() == idUsuario) {
+                                        long id = 0;
+                                        listaItens.get(getAdapterPosition()).setIdEntregador(id);
+                                        ItemDAO itemDAO = new ItemDAO(aContext);
+                                        itemDAO.cancelarEntrega(listaItens.get(getAdapterPosition()));
+                                        refreshAt(getAdapterPosition());
+                                    } else {
+                                        Toast.makeText(aContext, "Item " + itemDescricao + "não pode ser excluido!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            })
+                            .setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .show();
+
                 }
             });
 
